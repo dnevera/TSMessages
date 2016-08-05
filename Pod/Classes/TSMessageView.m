@@ -39,7 +39,7 @@ static NSMutableDictionary *_notificationDesign;
 /** Internal properties needed to resize the view on device rotation properly */
 @property (nonatomic, strong) UILabel *titleLabel;
 
-@property (nonatomic, strong) UILabel *contentLabel;
+@property (nonatomic, strong) UITextView *contentLabel;
 @property (nonatomic, strong) UIImageView *iconImageView;
 @property (nonatomic, strong) UIButton *button;
 @property (nonatomic, strong) UIView *borderView;
@@ -301,7 +301,11 @@ canBeDismissedByUser:(BOOL)dismissingEnabled
         // Set up content label (if set)
         if ([subtitle length])
         {
-            _contentLabel = [[UILabel alloc] init];
+            _contentLabel = [[UITextView alloc] init];
+            _contentLabel.editable = NO;
+            _contentLabel.contentMode   = UIViewContentModeScaleToFill;
+            _contentLabel.dataDetectorTypes = UIDataDetectorTypeLink;
+            
             [self.contentLabel setText:subtitle];
 
             UIColor *contentTextColor = [UIColor colorWithHexString:[current valueForKey:@"contentTextColor"]];
@@ -318,10 +322,10 @@ canBeDismissedByUser:(BOOL)dismissingEnabled
             } else {
                 [self.contentLabel setFont:[UIFont systemFontOfSize:fontSize]];
             }
-            [self.contentLabel setShadowColor:self.titleLabel.shadowColor];
-            [self.contentLabel setShadowOffset:self.titleLabel.shadowOffset];
-            self.contentLabel.lineBreakMode = self.titleLabel.lineBreakMode;
-            self.contentLabel.numberOfLines = 0;
+            //[self.contentLabel setShadowColor:self.titleLabel.shadowColor];
+            //[self.contentLabel setShadowOffset:self.titleLabel.shadowOffset];
+            //self.contentLabel.lineBreakMode = self.titleLabel.lineBreakMode;
+            //self.contentLabel.numberOfLines = 0;
 
             [self addSubview:self.contentLabel];
         }
