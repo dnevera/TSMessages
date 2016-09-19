@@ -11,7 +11,8 @@
 #import "TSBlurView.h"
 #import "TSMessage.h"
 
-#define TSMessageViewMinimumPadding 15.0
+#define TSMessageViewMinimumPadding 10.0f
+#define TSMessageViewMinimumSpace   10.0f
 
 #define TSDesignFileName @"TSMessagesDefaultDesign"
 
@@ -178,7 +179,7 @@ static NSMutableDictionary *_notificationDesign;
 - (CGFloat)padding
 {
     // Adds 10 padding to to cover navigation bar
-    return self.messagePosition == TSMessageNotificationPositionNavBarOverlay ? TSMessageViewMinimumPadding + 10.0f : TSMessageViewMinimumPadding;
+    return self.messagePosition == TSMessageNotificationPositionNavBarOverlay ? TSMessageViewMinimumPadding + TSMessageViewMinimumSpace : TSMessageViewMinimumPadding;
 }
 
 - (id)initWithTitle:(NSString *)title
@@ -280,6 +281,7 @@ canBeDismissedByUser:(BOOL)dismissingEnabled
 
         // Set up title label
         _titleLabel = [[UILabel alloc] init];
+        
         [self.titleLabel setText:title];
         [self.titleLabel setTextColor:fontColor];
         [self.titleLabel setBackgroundColor:[UIColor clearColor]];
@@ -302,9 +304,12 @@ canBeDismissedByUser:(BOOL)dismissingEnabled
         if ([subtitle length])
         {
             _contentLabel = [[UITextView alloc] init];
+            _contentLabel.textContainerInset = UIEdgeInsetsMake(4, -5, 4, 0);
             _contentLabel.editable = NO;
             _contentLabel.contentMode   = UIViewContentModeScaleToFill;
             _contentLabel.dataDetectorTypes = UIDataDetectorTypeLink;
+            //_contentLabel.scrollEnabled = NO;
+            //_contentLabel.selectable = NO;
             
             [self.contentLabel setText:subtitle];
 
@@ -464,7 +469,7 @@ canBeDismissedByUser:(BOOL)dismissingEnabled
     if ([self.subtitle length])
     {
         self.contentLabel.frame = CGRectMake(self.textSpaceLeft,
-                                             self.titleLabel.frame.origin.y + self.titleLabel.frame.size.height + 5.0,
+                                             self.titleLabel.frame.origin.y + self.titleLabel.frame.size.height,// + 5.0,
                                              screenWidth - padding - self.textSpaceLeft - self.textSpaceRight,
                                              0.0);
         [self.contentLabel sizeToFit];
