@@ -308,8 +308,8 @@ canBeDismissedByUser:(BOOL)dismissingEnabled
             _contentLabel.editable = NO;
             _contentLabel.contentMode   = UIViewContentModeScaleToFill;
             _contentLabel.dataDetectorTypes = UIDataDetectorTypeLink;
-            //_contentLabel.scrollEnabled = NO;
-            //_contentLabel.selectable = NO;
+            _contentLabel.scrollEnabled = NO;
+            _contentLabel.selectable = NO;
             
             [self.contentLabel setText:subtitle];
 
